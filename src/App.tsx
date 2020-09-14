@@ -1,10 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
 import './App.css';
 
 interface Turno {
   id?: number;
   name: string;
   project: string;
+}
+
+function Alert(props:any) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const getTurnos = async(cb:any, setProject:any, setName:any)=> {
@@ -17,7 +25,7 @@ const getTurnos = async(cb:any, setProject:any, setName:any)=> {
   });
 }
 
-const agregarTurno = async(cb:any, data:Turno)=> {
+const agregarTurno = async(cb:any, data:Turno, sn:any,sp:any, setOpen:any)=> {
   fetch('http://157.245.117.205:3000/api/turnos',{
     method: 'POST',
     headers: {
@@ -28,6 +36,9 @@ const agregarTurno = async(cb:any, data:Turno)=> {
   .then(res=>res.json())
   .then(res=>{
     cb(res)
+    sn("")
+    sp("")
+    setOpen(true);
   })
 }
 const removeTurno = async (cb: any, setProject: any, setName: any, data: any) => {
@@ -49,6 +60,7 @@ function App() {
   const [name, setName] = useState('')
   const [project, setProject] = useState('')
   const [turnos, setTurnos] = useState<Turno[]>([])
+  const [open, setOpen] = React.useState(false);
   
   const save=(evt:any)=>{
     evt.preventDefault();
@@ -60,7 +72,7 @@ function App() {
     const turno = {
       name, project
     }
-   agregarTurno(setTurnos, turno);
+   agregarTurno(setTurnos, turno, setName, setProject, setOpen);
   }
 
   const remove = (id:number) => {
@@ -75,15 +87,27 @@ function App() {
     getTurnos(setTurnos, setProject, setName)
   }, []);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event:any, reason:any) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <div className="App">
       <h1 className="main-title">Lista de espera</h1>
       <form onSubmit={save} className="form">
         <div>
-          <input style={{color: "#FFF"}} name="proyecto" type="text" onChange={evt=>setName(evt.target.value)} placeholder="Nombre" />
+          <input value={name} style={{color: "#FFF"}} name="proyecto" type="text" onChange={evt=>setName(evt.target.value)} placeholder="Nombre" />
         </div>
         <div>
-          <input style={{color: "#FFF"}} name="nombre" type="text" onChange={evt=>setProject(evt.target.value)} placeholder="Proyecto" />  
+          <input value={project} style={{color: "#FFF"}} name="nombre" type="text" onChange={evt=>setProject(evt.target.value)} placeholder="Proyecto" />  
         </div>
 
         <div>
@@ -114,6 +138,11 @@ function App() {
             </ul>
           </div>
         </div>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+            El proyecto se ha agregado
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
