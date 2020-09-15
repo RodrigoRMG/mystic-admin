@@ -123,7 +123,7 @@ function App() {
                       <h1 style={{margin: '0 10px 0 0', fontSize: '3rem'}}>{turno.number}</h1>
                       <div className="title">
                         {turno.name} - {turno.project}<br />
-                        <span>Jan 9, 2017</span>
+                        <span>{turno.date}</span>
                       </div>
                       <button className="button" onClick={()=>remove(turno.id)}> <i className="material-icons ml-auto waves-effect" style={{width: 'auto'}}>close</i></button>
                     </div>
