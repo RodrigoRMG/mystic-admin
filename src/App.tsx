@@ -76,7 +76,7 @@ function App() {
   const remove = (id:number) => {
     const data = {
       id,
-      finished: true
+      finished: 1
     }
     removeTurno(setTurnos, setProject, setName, data);
   }
