@@ -14,7 +14,7 @@ function Alert(props:any) {
 }
 
 const getTurnos = async(cb:any, setProject:any, setName:any)=> {
-  fetch('https://mytic-api.herokuapp.com/api/turnos')
+  fetch('https://mystic-api.herokuapp.com/api/turnos')
   .then(res=>res.json())
   .then(res=>{
     cb(res)
@@ -24,7 +24,7 @@ const getTurnos = async(cb:any, setProject:any, setName:any)=> {
 }
 
 const agregarTurno = async(cb:any, data:Turno, sn:any,sp:any, setOpen:any)=> {
-  fetch('https://mytic-api.herokuapp.com/api/turnos',{
+  fetch('https://mystic-api.herokuapp.com/api/turnos',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ const agregarTurno = async(cb:any, data:Turno, sn:any,sp:any, setOpen:any)=> {
   })
 }
 const removeTurno = async (cb: any, setProject: any, setName: any, data: any) => {
-  fetch('https://mytic-api.herokuapp.com/api/finish',{
+  fetch('https://mystic-api.herokuapp.com/api/finish',{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
