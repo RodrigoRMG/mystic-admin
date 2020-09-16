@@ -120,7 +120,7 @@ function App() {
                 turnos.map((turno:any) =>(
                   <li style={{marginBottom: 20}}>
                     <div className="valign-wrapper">
-                      <h1 style={{margin: '0 10px 0 0', fontSize: '3rem'}}>{turno.number}</h1>
+                      <h1 style={{margin: '0 10px 0 0', fontSize: '3rem'}}>{turno.id}</h1>
                       <div className="title">
                         {turno.name} - {turno.project}<br />
                         <span>{turno.date}</span>
